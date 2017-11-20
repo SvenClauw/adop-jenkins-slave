@@ -36,18 +36,12 @@ RUN yum install -y which \
     yum clean all 
 
 RUN pip install awscli==1.10.19
-
-RUN yum install -y 
-  
-  
   
 RUN yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 
-RUN yum -y install docker-ce
-
-RUN yum clean all
+RUN yum -y install docker-ce && yum clean all
 
 # Docker versions Env Variables
 #ENV DOCKER_ENGINE_VERSION=1.10.3-1.el7.centos
