@@ -1,9 +1,9 @@
-FROM centos:centos7.2.1511
+FROM centos:latest
 MAINTAINER "Nick Griffin" <nicholas.griffin@accenture.com>
 
 # Java Env Variables
-ENV JAVA_VERSION=1.8.0_45
-ENV JAVA_TARBALL=server-jre-8u45-linux-x64.tar.gz
+ENV JAVA_VERSION=1.8.0_152
+ENV JAVA_TARBALL=server-jre-8u152-linux-x64.tar.gz
 ENV JAVA_HOME=/opt/java/jdk${JAVA_VERSION}
 
 # Swarm Env Variables (defaults)
@@ -56,7 +56,7 @@ RUN wget -q --no-check-certificate --directory-prefix=/tmp \
                 rm -rf /tmp/* && rm -rf /var/log/*
 
 # Make Jenkins a slave by installing swarm-client
-RUN curl -s -o /bin/swarm-client.jar -k http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar
+RUN curl -s -o /bin/swarm-client.jar -k http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.6/swarm-client-3.6.jar
 
 # Start Swarm-Client
 CMD java -jar /bin/swarm-client.jar -executors ${SLAVE_EXECUTORS} -description "${SLAVE_DESCRIPTION}" -master ${SWARM_MASTER} -username ${SWARM_USER} -password ${SWARM_PASSWORD} -name "${SLAVE_NAME}" -labels "${SLAVE_LABELS}" -mode ${SLAVE_MODE}
