@@ -56,6 +56,12 @@ RUN yum -y install docker-ce && yum clean all
 #RUN curl -L https://github.com/docker/machine/releases/download/${DOCKER_MACHINE_VERSION}/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine && \
     #chmod +x /usr/local/bin/docker-machine
 
+RUN wget --no-cookies --directory-prefix=/tmp --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/${JAVA_TARBALL}"
+RUN mkdir -p /opt/java
+RUN tar -xzf /tmp/${JAVA_TARBALL} -C /opt/java/ 
+RUN alternatives --install /usr/bin/java java /opt/java/jdk${JAVA_VERSION}/bin/java 100
+RUN rm -rf /tmp/* && rm -rf /var/log/*
+
 # Make Jenkins a slave by installing swarm-client
 RUN curl -s -o /bin/swarm-client.jar -k http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.6/swarm-client-3.6.jar
 
